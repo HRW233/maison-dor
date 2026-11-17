@@ -15,22 +15,22 @@ function Header({ view, onNavigate }: { view: View; onNavigate: (v: View) => voi
   return (
     <header className="topbar">
       <div className="shell topbar-inner">
-        <button className="brand" onClick={() => onNavigate('floor')} aria-label="Maison d'Or home">
+        <button className="brand" onClick={() => onNavigate('floor')} aria-label="Parlour home">
           <span className="monogram">
-            <span>MD</span>
+            <span>P</span>
           </span>
           <span className="brand-text">
-            <span className="brand-name">MAISON D'OR</span>
-            <span className="brand-sub">Monte Carlo · Est. 1929</span>
+            <span className="brand-name">PARLOUR</span>
+            <span className="brand-sub">Play-money card and table games</span>
           </span>
         </button>
 
-        <nav className="nav" aria-label="Tables">
+        <nav className="nav" aria-label="Games">
           <button
             className={`nav-btn ${view === 'floor' ? 'is-active' : ''}`}
             onClick={() => onNavigate('floor')}
           >
-            Floor
+            Overview
           </button>
           {GAMES.map((g) => (
             <button
@@ -43,17 +43,17 @@ function Header({ view, onNavigate }: { view: View; onNavigate: (v: View) => voi
           ))}
         </nav>
 
-        <div className="bankroll" title="Your play chips">
+        <div className="bankroll" title="Your play-money balance">
           <div>
-            <span className="bankroll-label">Chips</span>
+            <span className="bankroll-label">Balance</span>
             <span className="bankroll-amount">{bank.format(bank.credits)}</span>
           </div>
           <button
             className="btn-comp"
             onClick={bank.claimComp}
-            title="Collect 1,000 complimentary chips"
+            title="Add 1,000 play credits"
           >
-            + Comp
+            + 1,000
           </button>
         </div>
       </div>
@@ -66,16 +66,17 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="shell footer-inner">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span className="age-badge">18+</span>
+        <div className="footer-left">
+          <span className="meta-tag">Play money</span>
           <p className="footer-note">
-            Maison d'Or is a demonstration salon. All chips are complimentary and no real money is
-            wagered, won or lost. Deck order comes from a cryptographic generator.
-            <br />© {new Date().getFullYear()} Maison d'Or · Monte Carlo
+            Parlour is a demonstration games room. Credits are simulated — no real money is wagered,
+            won or lost, and no account is needed. Every shuffle uses the browser&rsquo;s
+            cryptographic generator.
+            <br />© {new Date().getFullYear()} Parlour
           </p>
         </div>
         <button className="btn btn-ghost btn-sm" onClick={bank.reset}>
-          Reset bankroll
+          Reset credits
         </button>
       </div>
     </footer>
@@ -94,7 +95,6 @@ function Floor() {
   return (
     <div className="app">
       <div className="floor-ambience" />
-      <div className="vignette" />
       <Header view={view} onNavigate={navigate} />
       <main className="page">
         <div className="shell">
