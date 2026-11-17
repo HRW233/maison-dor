@@ -46,7 +46,7 @@ export default function Blackjack() {
       t = 'loss'
     } else if (playerBJ && !dealerBJ) {
       payout = Math.round(w * 2.5)
-      msg = `Blackjack — paid three to two. ${bank.format(payout)} chips.`
+      msg = `Blackjack — paid three to two. ${bank.format(payout)} credits.`
       t = 'win'
     } else if (dealerBJ && !playerBJ) {
       msg = 'Dealer has blackjack.'
@@ -57,7 +57,7 @@ export default function Blackjack() {
       t = 'info'
     } else if (dT > 21 || pT > dT) {
       payout = w * 2
-      msg = `You win — ${pT} against ${dT}. ${bank.format(w)} chips.`
+      msg = `You win — ${pT} against ${dT}. ${bank.format(w)} credits.`
       t = 'win'
     } else {
       msg = `Dealer wins — ${dT} against ${pT}.`
@@ -94,7 +94,7 @@ export default function Blackjack() {
   const deal = () => {
     if (phase !== 'bet' || busy) return
     if (!bank.debit(wager)) {
-      setMessage('Not enough chips — collect a comp at the top of the page.')
+      setMessage('Not enough credits — add some at the top of the page.')
       setTone('loss')
       return
     }
@@ -139,7 +139,7 @@ export default function Blackjack() {
   const double = () => {
     if (phase !== 'player' || busy || player.length !== 2) return
     if (!bank.debit(stake)) {
-      setMessage('Not enough chips to double.')
+      setMessage('Not enough credits to double.')
       setTone('loss')
       return
     }
@@ -170,15 +170,15 @@ export default function Blackjack() {
 
   return (
     <GameShell
-      eyebrow="Table One"
+      eyebrow="Table one"
       title="Blackjack"
       subtitle="Six-deck shoe. Dealer stands on all seventeens. Blackjack pays three to two, and any two cards may be doubled."
       rules={['3:2 blackjack', 'Dealer stands 17', 'Double any two']}
     >
       <div className="bj-table">
         <div className="bj-felt-line">
-          <strong>Maison d'Or</strong>
-          Blackjack pays 3 to 2
+          <strong>Blackjack</strong>
+          Dealer stands on all seventeens · pays 3:2
         </div>
 
         <div className="bj-row bj-row--dealer">
@@ -273,7 +273,7 @@ export default function Blackjack() {
         ) : null}
 
         <div className="controls-spacer" />
-        <span style={{ fontSize: 10.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,236,220,.5)' }}>
+        <span className="meta-line">
           In play · {bank.format(stake)}
         </span>
       </div>

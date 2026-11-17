@@ -18,15 +18,15 @@ type SymbolId =
 type SymbolDef = { id: SymbolId; glyph: string; weight: number; pays: [number, number, number] }
 
 const SYMBOLS: SymbolDef[] = [
-  { id: 'crown', glyph: '\u265B', weight: 2, pays: [40, 150, 600] },
-  { id: 'star', glyph: '\u2605', weight: 4, pays: [20, 80, 300] },
+  { id: 'crown', glyph: '\\u265B', weight: 2, pays: [40, 150, 600] },
+  { id: 'star', glyph: '\\u2605', weight: 4, pays: [20, 80, 300] },
   { id: 'seven', glyph: '7', weight: 6, pays: [12, 50, 200] },
-  { id: 'diamond', glyph: '\u25C6', weight: 8, pays: [10, 40, 150] },
-  { id: 'bell', glyph: '\u269C', weight: 11, pays: [8, 25, 100] },
+  { id: 'diamond', glyph: '\\u25C6', weight: 8, pays: [10, 40, 150] },
+  { id: 'bell', glyph: '\\u269C', weight: 11, pays: [8, 25, 100] },
   { id: 'bar', glyph: 'BAR', weight: 13, pays: [6, 18, 70] },
-  { id: 'horseshoe', glyph: '\u2756', weight: 16, pays: [4, 12, 45] },
-  { id: 'cherry', glyph: '\u2663', weight: 20, pays: [3, 8, 25] },
-  { id: 'coin', glyph: '\u2726', weight: 22, pays: [2, 5, 15] },
+  { id: 'horseshoe', glyph: '\\u2756', weight: 16, pays: [4, 12, 45] },
+  { id: 'cherry', glyph: '\\u2663', weight: 20, pays: [3, 8, 25] },
+  { id: 'coin', glyph: '\\u2726', weight: 22, pays: [2, 5, 15] },
 ]
 
 const WEIGHTS = SYMBOLS.map((s) => s.weight)
@@ -141,9 +141,9 @@ export default function Slots() {
 
   return (
     <GameShell
-      eyebrow="The Cabinet"
-      title="Gilded Reels"
-      subtitle="Five reels of engraved brass and enamel, five fixed paylines. Three or more of a kind from the left reel pays; five crowns is the house record."
+      eyebrow="Table three"
+      title="Five Reels"
+      subtitle="Five reels on five fixed paylines. Three or more matching symbols from the left reel pay, and five crowns pays six hundred times the line."
       rules={['5 paylines', 'Left to right', 'Crowns 600×']}
       tone="noir"
     >
@@ -193,19 +193,19 @@ export default function Slots() {
 
         <div className="slot-win">
           {spinning ? (
-            <span style={{ fontSize: 10.5, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(231,205,149,.5)' }}>
+            <span className="hint-line">
               Good luck
             </span>
           ) : win && win.total > 0 ? (
             <>
-              <div className="slot-win-amount gold-text">{bank.format(win.total)}</div>
-              <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(231,205,149,.7)' }}>
+              <div className="slot-win-amount">{bank.format(win.total)}</div>
+              <span className="hint-line">
                 {strongest ? `${strongest.count} ${strongest.symbol} on line ${strongest.line}` : 'Winner'}
               </span>
             </>
           ) : (
-            <span style={{ fontSize: 10.5, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(231,205,149,.35)' }}>
-              {win ? 'No line — spin again' : 'Five reels · five lines'}
+            <span className="hint-line">
+              {win ? 'No line this spin' : 'Five reels · five lines'}
             </span>
           )}
         </div>
@@ -245,7 +245,7 @@ export default function Slots() {
         </button>
 
         <div className="controls-spacer" />
-        <span style={{ fontSize: 10.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,236,220,.5)' }}>
+        <span className="meta-line">
           {PAYLINES.length} lines · {bank.format(totalBet)} total
         </span>
       </div>
