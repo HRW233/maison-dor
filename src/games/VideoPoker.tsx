@@ -131,7 +131,7 @@ export default function VideoPoker() {
 
   return (
     <GameShell
-      eyebrow="The Machine"
+      eyebrow="Table four"
       title="Video Poker"
       subtitle="Jacks or Better on the generous nine-six pay table. Five coins max, dealt from a fresh fifty-two card deck every hand."
       rules={['9/6 pay table', '52 cards', 'Hold & draw']}
@@ -166,7 +166,7 @@ export default function VideoPoker() {
             : phase === 'draw'
               ? 'Hold the cards you keep, then draw'
               : comboName
-                ? `${comboName} — ${bank.format(won)} chips`
+                ? `${comboName} — ${bank.format(won)} credits`
                 : 'No pair of jacks. The hand is the house’s.'}
         </div>
 
@@ -185,7 +185,7 @@ export default function VideoPoker() {
 
       <div className="controls">
         <div className="wager-group">
-          <span className="wager-label">Coins</span>
+          <span className="wager-label">Wager</span>
           {[1, 2, 3, 4, 5].map((n) => (
             <button
               key={n}
@@ -219,8 +219,8 @@ export default function VideoPoker() {
         ) : null}
 
         <div className="controls-spacer" />
-        <span style={{ fontSize: 10.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,236,220,.5)' }}>
-          Max win · {(PAYTABLE[0].pay * coins).toLocaleString()} chips
+        <span className="meta-line">
+          Max win · {(PAYTABLE[0].pay * coins).toLocaleString()} credits
         </span>
       </div>
     </GameShell>

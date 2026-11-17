@@ -77,7 +77,7 @@ export default function Roulette() {
   const place = (id: string) => {
     if (spinning) return
     if (!bank.debit(chip)) {
-      setMessage('Not enough chips for that bet.')
+      setMessage('Not enough credits for that bet.')
       setTone('loss')
       return
     }
@@ -110,7 +110,7 @@ export default function Roulette() {
   const spin = () => {
     if (spinning) return
     if (total <= 0) {
-      setMessage('Place at least one chip before the wheel spins.')
+      setMessage('Place at least one credit before the wheel spins.')
       setTone('loss')
       return
     }
@@ -145,7 +145,7 @@ export default function Roulette() {
       setResult(winning)
       setSpinning(false)
       if (returns > 0) {
-        setMessage(`${winning} ${colorOf(winning)} — ${bank.format(returns)} chips back (${profit > 0 ? '+' : ''}${bank.format(profit)}).`)
+        setMessage(`${winning} ${colorOf(winning)} — ${bank.format(returns)} credits back (${profit > 0 ? '+' : ''}${bank.format(profit)}).`)
         setTone(profit >= 0 ? 'win' : 'info')
       } else {
         setMessage(`${winning} ${colorOf(winning)}. The house collects.`)
@@ -158,7 +158,7 @@ export default function Roulette() {
 
   return (
     <GameShell
-      eyebrow="Table Two"
+      eyebrow="Table two"
       title="European Roulette"
       subtitle="One green zero, thirty-six pockets around a brass wheel. Straight numbers pay thirty-five to one; dozens and columns pay two to one."
       rules={['Single zero', '35:1 straight', '2:1 dozens']}
@@ -171,19 +171,19 @@ export default function Roulette() {
             <svg viewBox="0 0 240 240" aria-label="Roulette wheel">
               <defs>
                 <linearGradient id="rimGold" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f7e6c1" />
-                  <stop offset="45%" stopColor="#c39a4f" />
-                  <stop offset="100%" stopColor="#5e421a" />
+                  <stop offset="0%" stopColor="#e4e0d8" />
+                  <stop offset="45%" stopColor="#b8b2a6" />
+                  <stop offset="100%" stopColor="#6f6b63" />
                 </linearGradient>
                 <radialGradient id="hubWood" cx="42%" cy="32%">
-                  <stop offset="0%" stopColor="#5c3a22" />
-                  <stop offset="55%" stopColor="#2a1710" />
-                  <stop offset="100%" stopColor="#140a06" />
+                  <stop offset="0%" stopColor="#f8f6f1" />
+                  <stop offset="55%" stopColor="#e8e4db" />
+                  <stop offset="100%" stopColor="#d7d2c7" />
                 </radialGradient>
                 <radialGradient id="hubGold" cx="40%" cy="30%">
-                  <stop offset="0%" stopColor="#fdf3d6" />
-                  <stop offset="55%" stopColor="#d8b46c" />
-                  <stop offset="100%" stopColor="#8a6528" />
+                  <stop offset="0%" stopColor="#f5f2ec" />
+                  <stop offset="55%" stopColor="#d9d3c6" />
+                  <stop offset="100%" stopColor="#a9a39a" />
                 </radialGradient>
               </defs>
 
@@ -197,11 +197,11 @@ export default function Roulette() {
               >
                 {WHEEL_ORDER.map((n, i) => {
                   const c = colorOf(n)
-                  const fill = c === 'red' ? '#a3122a' : c === 'black' ? '#121212' : '#0d6b48'
+                  const fill = c === 'red' ? '#a5453c' : c === 'black' ? '#2b2d31' : '#2f6b56'
                   const [tx, ty] = polar(96, i * STEP)
                   return (
                     <g key={n}>
-                      <path d={pocketPath(i)} fill={fill} stroke="rgba(231,205,149,.32)" strokeWidth="0.4" />
+                      <path d={pocketPath(i)} fill={fill} stroke="rgba(251,250,247,.26)" strokeWidth="0.4" />
                       <text
                         x={tx}
                         y={ty}
@@ -217,9 +217,9 @@ export default function Roulette() {
                     </g>
                   )
                 })}
-                <circle cx="120" cy="120" r="77" fill="none" stroke="url(#rimGold)" strokeWidth="1.4" />
-                <circle cx="120" cy="120" r="64" fill="url(#hubWood)" stroke="url(#rimGold)" strokeWidth="0.9" />
-                <circle cx="120" cy="120" r="46" fill="none" stroke="rgba(231,205,149,.5)" strokeWidth="0.7" />
+                <circle cx="120" cy="120" r="77" fill="none" stroke="rgba(22,24,28,.18)" strokeWidth="1.2" />
+                <circle cx="120" cy="120" r="64" fill="url(#hubWood)" stroke="rgba(22,24,28,.16)" strokeWidth="0.9" />
+                <circle cx="120" cy="120" r="46" fill="none" stroke="rgba(22,24,28,.12)" strokeWidth="0.7" />
                 {Array.from({ length: 8 }).map((_, i) => (
                   <line
                     key={i}
@@ -233,14 +233,14 @@ export default function Roulette() {
                   />
                 ))}
                 <circle cx="120" cy="120" r="17" fill="url(#hubGold)" />
-                <circle cx="120" cy="120" r="13" fill="none" stroke="rgba(60,40,10,.45)" strokeWidth="0.8" />
+                <circle cx="120" cy="120" r="13" fill="none" stroke="rgba(22,24,28,.22)" strokeWidth="0.8" />
                 <text
                   x="120"
                   y="123"
                   textAnchor="middle"
                   fontSize="8"
                   fontFamily="Cinzel, serif"
-                  fill="#2a1d08"
+                  fill="#4b5057"
                   letterSpacing="1"
                 >
                   37
@@ -251,7 +251,7 @@ export default function Roulette() {
                 className="wheel-ball-track"
                 style={{ transform: `rotate(${ball}deg)`, transformOrigin: '120px 120px' }}
               >
-                <circle cx="120" cy="11" r="4.4" fill="#fffaf0" />
+                <circle cx="120" cy="11" r="4.4" fill="#ffffff" stroke="#2b2d31" strokeWidth="0.7" />
                 <circle cx="118.6" cy="9.6" r="1.4" fill="#ffffff" />
               </g>
               <circle cx="120" cy="120" r="3.4" fill="url(#rimGold)" />
@@ -262,12 +262,12 @@ export default function Roulette() {
             {result !== null ? (
               <>
                 <span className={`result-orb is-${colorOf(result)}`}>{result}</span>
-                <span style={{ fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(243,236,220,.65)' }}>
+                <span className="hint-line">
                   {colorOf(result) === 'green' ? 'Zero' : colorOf(result)} · {result === 0 ? 'house pocket' : result % 2 === 0 ? 'even' : 'odd'}
                 </span>
               </>
             ) : (
-              <span style={{ fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(243,236,220,.4)' }}>
+              <span className="hint-line">
                 {spinning ? 'No more bets…' : 'Wheel at rest'}
               </span>
             )}
@@ -369,7 +369,9 @@ export default function Roulette() {
                   style={{
                     gridColumn: o.col,
                     gridRow: 5,
-                    background: o.ruby ? 'linear-gradient(160deg, rgba(168,22,44,.9), rgba(110,12,28,.9))' : undefined,
+                    ...(o.ruby
+                      ? { background: '#f7e8e4', borderColor: '#ecd3cd', color: '#8f3b33' }
+                      : null),
                   }}
                   onClick={() => place(o.id)}
                 >
@@ -386,8 +388,8 @@ export default function Roulette() {
 
           <div className="bet-summary">
             {bets.length === 0 ? (
-              <span style={{ fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(243,236,220,.35)' }}>
-                No chips on the felt
+              <span className="hint-line">
+                No credits on the layout
               </span>
             ) : (
               bets.map((b) => (
@@ -406,7 +408,7 @@ export default function Roulette() {
 
       <div className="controls">
         <div className="wager-group">
-          <span className="wager-label">Chip</span>
+          <span className="wager-label">Wager</span>
           {[1, 5, 25, 100].map((v) => (
             <Chip key={v} value={v} small selected={chip === v} onClick={() => setChip(v)} />
           ))}
@@ -421,7 +423,7 @@ export default function Roulette() {
           Clear
         </button>
         <div className="controls-spacer" />
-        <span style={{ fontSize: 10.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,236,220,.5)' }}>
+        <span className="meta-line">
           On the felt · {bank.format(total)}
         </span>
       </div>
