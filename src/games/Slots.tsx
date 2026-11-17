@@ -18,15 +18,15 @@ type SymbolId =
 type SymbolDef = { id: SymbolId; glyph: string; weight: number; pays: [number, number, number] }
 
 const SYMBOLS: SymbolDef[] = [
-  { id: 'crown', glyph: '\\u265B', weight: 2, pays: [40, 150, 600] },
-  { id: 'star', glyph: '\\u2605', weight: 4, pays: [20, 80, 300] },
+  { id: 'crown', glyph: '\u265B', weight: 2, pays: [40, 150, 600] },
+  { id: 'star', glyph: '\u2605', weight: 4, pays: [20, 80, 300] },
   { id: 'seven', glyph: '7', weight: 6, pays: [12, 50, 200] },
-  { id: 'diamond', glyph: '\\u25C6', weight: 8, pays: [10, 40, 150] },
-  { id: 'bell', glyph: '\\u269C', weight: 11, pays: [8, 25, 100] },
+  { id: 'diamond', glyph: '\u25C6', weight: 8, pays: [10, 40, 150] },
+  { id: 'bell', glyph: '\u269C', weight: 11, pays: [8, 25, 100] },
   { id: 'bar', glyph: 'BAR', weight: 13, pays: [6, 18, 70] },
-  { id: 'horseshoe', glyph: '\\u2756', weight: 16, pays: [4, 12, 45] },
-  { id: 'cherry', glyph: '\\u2663', weight: 20, pays: [3, 8, 25] },
-  { id: 'coin', glyph: '\\u2726', weight: 22, pays: [2, 5, 15] },
+  { id: 'horseshoe', glyph: '\u2756', weight: 16, pays: [4, 12, 45] },
+  { id: 'cherry', glyph: '\u2663', weight: 20, pays: [3, 8, 25] },
+  { id: 'coin', glyph: '\u2726', weight: 22, pays: [2, 5, 15] },
 ]
 
 const WEIGHTS = SYMBOLS.map((s) => s.weight)
