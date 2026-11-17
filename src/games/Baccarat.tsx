@@ -119,7 +119,7 @@ export default function Baccarat() {
     const s = stakesRef.current
     const onLayout = s.player + s.banker + s.tie
     if (onLayout + chip > bank.credits) {
-      setMessage('Not enough chips for that wager.')
+      setMessage('Not enough credits for that wager.')
       setTone('loss')
       return
     }
@@ -173,7 +173,7 @@ export default function Baccarat() {
         const label =
           next.winner === 'tie' ? 'Tie' : next.winner === 'player' ? 'Player' : 'Banker'
         if (returns > stake) {
-          setMessage(`${label} ${next.winner === 'player' ? next.playerTotal : next.bankerTotal} — paid ${bank.format(returns)} chips (+${bank.format(profit)}).`)
+          setMessage(`${label} ${next.winner === 'player' ? next.playerTotal : next.bankerTotal} — paid ${bank.format(returns)} credits (+${bank.format(profit)}).`)
           setTone('win')
         } else if (returns === stake) {
           setMessage(`${label} takes it. Your wager is returned.`)
@@ -199,9 +199,9 @@ export default function Baccarat() {
 
   return (
     <GameShell
-      eyebrow="The Salon Privé"
+      eyebrow="Table five"
       title="Baccarat"
-      subtitle="The oldest game in the salon. Eight-deck shoe, third-card rules applied by the croupier, banker commission of five per cent."
+      subtitle="Eight-deck shoe with the standard third-card rules applied automatically. Banker wins carry a five per cent commission; ties pay eight to one."
       rules={['8 decks', 'Banker 0.95:1', 'Tie 8:1']}
       tone="green"
     >
@@ -266,7 +266,7 @@ export default function Baccarat() {
 
       <div className="controls">
         <div className="wager-group">
-          <span className="wager-label">Chip</span>
+          <span className="wager-label">Wager</span>
           {[25, 100, 500].map((v) => (
             <Chip key={v} value={v} small selected={chip === v} onClick={() => setChip(v)} />
           ))}
@@ -280,7 +280,7 @@ export default function Baccarat() {
         </button>
 
         <div className="controls-spacer" />
-        <span style={{ fontSize: 10.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,236,220,.5)' }}>
+        <span className="meta-line">
           On the layout · {bank.format(totalStake)}
         </span>
       </div>
