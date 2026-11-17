@@ -93,6 +93,13 @@ export default function Baccarat() {
   const [message, setMessage] = useState('Back the Player, the Banker, or the Tie')
   const [tone, setTone] = useState<'info' | 'win' | 'loss'>('info')
   const timers = useRef<number[]>([])
+  // Stakes are only debited when the coup is dealt, so mirror them in a ref
+  // to keep the on-layout ceiling accurate between renders.
+  const stakesRef = useRef<Stakes>(stakes)
+  const setStakesBoth = (next: Stakes) => {
+    stakesRef.current = next
+    setStakes(next)
+  }
 
   useEffect(
     () => () => {
@@ -109,24 +116,29 @@ export default function Baccarat() {
 
   const place = (side: keyof Stakes) => {
     if (phase === 'dealing') return
-    if (!bank.debit(chip)) {
+    const s = stakesRef.current
+    const onLayout = s.player + s.banker + s.tie
+    if (onLayout + chip > bank.credits) {
       setMessage('Not enough chips for that wager.')
       setTone('loss')
       return
     }
-    setStakes((s) => ({ ...s, [side]: s[side] + chip }))
+    setStakesBoth({ ...s, [side]: s[side] + chip })
     setMessage('')
     setTone('info')
   }
 
   const deal = () => {
     if (phase === 'dealing') return
-    if (totalStake <= 0) {
+    const s = stakesRef.current
+    const stake = s.player + s.banker + s.tie
+    if (stake <= 0) {
       setMessage('Place a wager on Player, Banker or Tie first.')
       setTone('loss')
       return
     }
-    if (!bank.debit(totalStake)) return
+    // Charge the layout once, at the deal.
+    if (!bank.debit(stake)) return
 
     const next = playRound()
     setRound(next)
@@ -142,28 +154,28 @@ export default function Baccarat() {
     timers.current.push(
       window.setTimeout(() => {
         let returns = 0
-        if (next.winner === 'player') returns += stakes.player * 2
-        if (next.winner === 'banker') returns += Math.round(stakes.banker * 1.95)
+        if (next.winner === 'player') returns += s.player * 2
+        if (next.winner === 'banker') returns += Math.round(s.banker * 1.95)
         if (next.winner === 'tie') {
-          returns += stakes.tie * 9
-          returns += stakes.player + stakes.banker
+          returns += s.tie * 9
+          returns += s.player + s.banker
         }
 
-        const profit = returns - totalStake
+        const profit = returns - stake
         if (returns > 0) {
           bank.credit(returns)
           bank.recordWin(returns)
         }
 
-        setStakes({ player: 0, banker: 0, tie: 0 })
+        setStakesBoth({ player: 0, banker: 0, tie: 0 })
         setPhase('done')
 
         const label =
           next.winner === 'tie' ? 'Tie' : next.winner === 'player' ? 'Player' : 'Banker'
-        if (returns > totalStake) {
+        if (returns > stake) {
           setMessage(`${label} ${next.winner === 'player' ? next.playerTotal : next.bankerTotal} — paid ${bank.format(returns)} chips (+${bank.format(profit)}).`)
           setTone('win')
-        } else if (returns === totalStake) {
+        } else if (returns === stake) {
           setMessage(`${label} takes it. Your wager is returned.`)
           setTone('info')
         } else {
@@ -176,8 +188,8 @@ export default function Baccarat() {
 
   const reset = () => {
     if (phase === 'dealing') return
-    if (totalStake > 0) bank.credit(totalStake)
-    setStakes({ player: 0, banker: 0, tie: 0 })
+    // Nothing was debited at placement, so clearing the layout is free.
+    setStakesBoth({ player: 0, banker: 0, tie: 0 })
     setMessage('Back the Player, the Banker, or the Tie')
     setTone('info')
     setRound(null)
